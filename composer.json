@@ -1,0 +1,13 @@
+{
+    "name": "shelob9/posts",
+    "description": "Generic post query with nice bonuses",
+    "license": "GPLv2+",
+    "authors": [
+        {
+            "name": "Josh Pollock",
+            "email": "Josh@JoshPress.net"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
