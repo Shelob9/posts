@@ -39,7 +39,7 @@ class register {
 	 */
 	protected function maybe_register_post_type( $post_type_name, $post_type_args ) {
 		if ( false == post_type_exists( $post_type_name ) ) {
-			\shelob9\posts\register_a_post_type( $post_type_name, $post_type_args );
+			new \shelob9\posts\register_a_post_type( $post_type_name, $post_type_args );
 
 		}
 	}
