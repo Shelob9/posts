@@ -130,24 +130,21 @@ class posts {
 	/**
 	 * Find all post objects for the given query.
 	 *
-	 * @param array $query
+	 * @param array $args WP_Query args
 	 *
 	 * @return \WP_Post[]
 	 */
-	private function find( array $query ) {
-		$query = array_merge( array(
+	private function find( array $args ) {
+		$args = array_merge( array(
 			'no_found_rows'          => true,
 			'update_post_meta_cache' => true,
 			'update_post_term_cache' => false,
-		), $query );
+		), $args );
 
-		$query[ 'post_type' ] = $this->post_type_name;
+		$args[ 'post_type' ] = array( $this->post_type_name );
 
-		$this->query->query( $query );
-		if( $this->query->have_posts() ) {
-			return $this->query->posts;
+		return $this->query->query( $args );
 
-		}
 	}
 
 	/**
