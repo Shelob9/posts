@@ -28,13 +28,10 @@ class post_factory {
 	 * Create an instance of the post query class
 	 *
 	 * @param string $post_type Name of post type
-	 * @param array|\WP_Query $query Optional. WP_Query object or  WP_Query arguments. Default is empty array.
 	 */
-	public static function create( $post_type, $query = array() ) {
-		if( is_array( $query ) ) {
-			$query = new \WP_Query( $query );
-		}
-		self::$instances[ $post_type ] = new posts( $query );
+	public static function create( $post_type ) {
+		self::$instances[ $post_type ] = new posts( $post_type );
+
 	}
 
 	/**

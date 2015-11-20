@@ -29,12 +29,20 @@ class posts {
 	private $query;
 
 	/**
+	 * Name of post type
+	 *
+	 * @var string
+	 */
+	private $post_type_name;
+
+	/**
 	 * Constructor.
 	 *
-	 * @param \WP_Query $query
+	 * @param string $post_type_name Name of post type
 	 */
-	public function __construct( \WP_Query $query ) {
-		$this->query = $query;
+	public function __construct( $post_type_name ) {
+		$this->post_type_name = $post_type_name;
+		$this->query = new \WP_Query();
 	}
 
 	/**
@@ -133,7 +141,13 @@ class posts {
 			'update_post_term_cache' => false,
 		), $query );
 
-		return $this->query->query( $query );
+		$query[ 'post_type' ] = $this->post_type_name;
+
+		$this->query->query( $query );
+		if( $this->query->have_posts() ) {
+			return $this->query->posts;
+
+		}
 	}
 
 	/**

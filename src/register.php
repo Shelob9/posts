@@ -23,11 +23,10 @@ class register {
 	 *
 	 * @param string $post_type_name Name of post type
 	 * @param array $post_type_args Post type args
-	 * @param array $initial_query_args Optional Initial WP_Query args
 	 */
-	public function __construct( $post_type_name, $post_type_args, $initial_query_args = array() ){
+	public function __construct( $post_type_name, $post_type_args ){
 		$this->maybe_register_post_type( $post_type_name, $post_type_args );
-		post_factory::create( $post_type_name, $initial_query_args );
+		post_factory::create( $post_type_name );
 
 	}
 
