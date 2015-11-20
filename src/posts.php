@@ -96,17 +96,26 @@ class posts {
 	/**
 	 * Save a post into the repository. Returns the post ID or a WP_Error.
 	 *
-	 * @param array $post
+	 * @param array $post Post args to be passed to wp_insert_post/ wp_update_post
+	 * @param array $metas Optional. An array of meta fields to save
 	 *
-	 * @return int|\WP_Error
+	 * @return int|\WP_Error ID of post or WP_Error if not saved
 	 */
-	public function save( array $post ) {
+	public function save( array $post, array $metas = array() ) {
 		if ( ! empty( $post[ 'ID' ] ) ) {
-			return wp_update_post( $post, true );
+			$id =  wp_update_post( $post, true );
+		}else{
+			$id = wp_insert_post( $post, true );
+		}
+
+		if( ! is_wp_error( $id ) && ! empty( $metas ) ) {
+			$this->save_metas( $metas, $id );
 
 		}
 
-		return wp_insert_post( $post, true );
+		return $id;
+
+
 
 	}
 
@@ -143,6 +152,18 @@ class posts {
 		$posts = $this->find( $query );
 
 		return ! empty( $posts[0] ) ? $posts[0] : null;
+	}
+
+	/**
+	 * Save post meta fields
+	 *
+	 * @param array $metas Array of meta fields to save key=>$value
+	 * @param int $id Post ID
+ 	 */
+	protected function save_metas( array $metas, $id ) {
+		foreach ( $metas as $key => $value ) {
+			update_post_meta( $id, $key, $value );
+		}
 	}
 
 }
